@@ -1,64 +1,66 @@
-﻿public class Program
+﻿using Conclase9.Models;
+
+public class Program
 {
     public static void Main(string[] args)
     {
-        //Operators
-        decimal balance = 1000m;
-        bool running = true;
+        //var square = new Square(7);
+        //square.Area();
 
-        while (running)
+        var guid = Guid.NewGuid();
+        //var area = square.Area();
+
+        var num = 7;
+        Console.WriteLine(num);
+        var doubled = num.Double();
+        Console.WriteLine(doubled);
+
+        var num3 = 8;
+        num3.Double();
+    }
+
+    public static bool Register(string name, string email, string password)
+    {
+        //is the name valid?
+        if (string.IsNullOrEmpty(name))
         {
-            Console.WriteLine("\n=====================ATM============================");
-            Console.WriteLine("1. Check Balance");
-            Console.WriteLine("2. Deposit");
-            Console.WriteLine("3. Withdraw");
-            Console.WriteLine("4. Exit");
-            Console.Write("Please select an option: ");
-
-            var input = Console.ReadLine();
-            switch (input)
-            {
-                case "1":
-                    Console.WriteLine($"Your balance is: {balance}");
-                    break;
-                case "2":
-                    Console.Write("Please enter the deposit amount: ");
-                    decimal deposit = decimal.Parse(Console.ReadLine()!);
-                    if(deposit > 0)
-                    {
-                        balance += deposit;
-                        Console.WriteLine("Deposit successful");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid deposit amount");
-                    }
-                    break;
-                case "3":
-                    Console.Write("Please enter withdrawal amount: ");
-                    decimal withdraw = decimal.Parse(Console.ReadLine()!);
-                    if(withdraw <= 0)
-                    {
-                        Console.WriteLine("Invalid withdrawal amount");
-                    }
-                    else if (withdraw > balance)
-                    {
-                        Console.WriteLine("Insufficient fund");
-                    }
-                    else
-                    {
-                        balance -= withdraw;
-                        Console.WriteLine("Withdrawal successful");
-                    }
-                    break;
-                case "4":
-                    Console.WriteLine("Thank you for banking with us.");
-                    running = false;
-                    break;
-                default:
-                    Console.WriteLine("Invalid option. Please try again");
-                    break;
-            }
+            return false;
         }
+        //is the email valid?
+        if (string.IsNullOrEmpty(email) || !IsAValidEmail(email))
+        {
+            return false;
+        }
+        //is the password valid and does it meet the length and strength requirement
+        if(string.IsNullOrEmpty(password) || password.Length < 8)
+        {
+            return false;
+        }
+        //do we have an existing user with this email?
+        //if yes, return
+        var existingUser = GetUser(email);
+        if(existingUser != null)
+        {
+            return false;
+        }
+        
+        //if no, register
+        var result = AddUser(name, email, password);
+        return result;
+    }
+
+    static bool AddUser(string name, string email, string password)
+    {
+        return true;
+    }
+
+    static string GetUser(string email)
+    {
+        return email;
+    }
+
+    static bool IsAValidEmail(string email)
+    {
+        return true;
     }
 }
