@@ -2,15 +2,18 @@
 {
     public class Rat : Animal
     {
-
-        private void MakeRatSleep()
+        public Rat() : base("Jerry")
         {
-            Sleep();
+            
+        }
+        public void Gnaw()
+        {
+            Console.WriteLine($"{Name} ganwing");
         }
 
-        private void MakeRatEat()
+        public override void Eat()
         {
-            Feed();
+            Console.WriteLine("Rat is eating");
         }
     }
 }

@@ -2,14 +2,12 @@
 {
     internal class Rectangle : Shape
     {
-        public Rectangle(string name)
-        {
-            Name = name;
-        }
+        public double Width { get; set; }
+        public double Height { get; set; }
 
-        public static int Area(int x, int y)
+        public override double Area()
         {
-            return x * y;
+            return Width * Height;
         }
     }
 }

@@ -2,19 +2,18 @@
 {
     public class Cat : Animal
     {
-        public Cat()
+        public Cat() : base("Tom")
         {
-           
         }
 
-        public void MakeCatSleep()
+        public void Meow()
         {
-            Sleep();
+            Console.WriteLine($"{Name} meows");
         }
 
-        private void MakeCatEat()
+        public override void Eat()
         {
-            Feed();
+            Console.WriteLine("Cat is eating");
         }
     }
 }

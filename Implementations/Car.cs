@@ -1,12 +1,12 @@
 ﻿namespace Implementations
 {
-    public class Car
+    public class Car : BaseEntity
     {
-        public int Id { get; set; }
+        public string Brand { get; set; } = default!;
 
-        private void Drive()
+        public void CarDetails()
         {
-            Console.WriteLine();
+            Console.WriteLine($"Id: {Id}\nBrand: {Brand}\nManufacturing Date: {CreatedAt}");
         }
     }
 }
