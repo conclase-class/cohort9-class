@@ -2,30 +2,21 @@
 {
     public class Animal
     {
-        private static int _count;
-        private string name;
-
-        public string Name { get; set; } = default!;
-        protected internal string Color { get; set; }
+        protected string Name { get; set; }
 
         public Animal()
         {
-            _count++;
+            
         }
 
-        protected void Sleep()
+        public Animal(string name)
         {
-            Console.WriteLine("Sleeping");
+            Name = name;
         }
 
-        private protected void Feed()
+        public virtual void Eat()
         {
-            Console.WriteLine("Feeding");
-        }
-
-        public static void PrintPopulation()
-        {
-            Console.WriteLine($"There are {_count} animals in this Kingdom.");
+            Console.WriteLine($"{Name} is eating...");
         }
     }
 }

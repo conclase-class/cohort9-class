@@ -1,7 +1,7 @@
 ﻿namespace Conclase9.Models
 {
-    public class Shape
+    public abstract class Shape
     {
-        public string Name { get; set; } = default!;
+        public abstract double Area();
     }
 }
