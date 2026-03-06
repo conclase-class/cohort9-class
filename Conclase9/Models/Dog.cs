@@ -4,12 +4,7 @@
     {
         public void Bark()
         {
-            Console.WriteLine($"{Name} barking...");
-        }
-
-        public override void Eat()
-        {
-            Console.WriteLine("Dog is eating");
+            Console.WriteLine($"Barking...");
         }
     }
 }

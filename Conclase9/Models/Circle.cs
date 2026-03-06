@@ -8,5 +8,10 @@
         {
             return Math.PI * Radius * Radius;
         }
+
+        public override void Describe()
+        {
+            Console.WriteLine("This is a Circle");
+        }
     }
 }
