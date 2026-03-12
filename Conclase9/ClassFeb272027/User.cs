@@ -7,6 +7,7 @@ namespace Conclase9.ClassFeb272027
     {
         public string Email { get; set; } = default!;
         public string Name { get; set; } = default!;
+        public int Age { get; set; }
         public AccountStatus Status { get; set; }
         public Permission Permission { get; set; }
     }

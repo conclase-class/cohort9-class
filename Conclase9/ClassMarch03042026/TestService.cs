@@ -28,17 +28,24 @@ namespace Conclase9.ClassMarch03042026
             var user = users.Where(u => u.Email == username).FirstOrDefault();
             if (user == null)
             {
-                return ApiResponse<User>.Fail<User>("Not Found", 404);
+                return ApiResponse<User>.Fail("Not Found", 404);
             }
 
             return ApiResponse<User>.Ok(user);
         }
 
-        public static ApiResponse<List<UserTask>> GetTasksByStatus(ETaskStatus status)
+        public static ApiResponse<List<UserTask>> GetTasksByStatus()
         {
-            var tasks = userTasks.Where(t => t.Status == status).ToList();
+            var tasks = userTasks
+                .Where(t => t.Status == ETaskStatus.Completed)
+                .ToList();
 
             return ApiResponse<List<UserTask>>.Ok(tasks);
+        }
+
+        public static bool Completed(UserTask userTask)
+        {
+            return userTask.Status == ETaskStatus.Completed;
         }
     }
 }

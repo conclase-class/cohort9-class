@@ -1,13 +1,16 @@
 ﻿using Conclase9.ClassFeb272027;
 using Conclase9.ClassMarch022026;
-using Conclase9.ClassMarch03042026;
-using System.Text.Json;
-using ETaskStatus = Conclase9.ClassMarch022026.ETaskStatus;
+using Conclase9.March112026;
 
 public class Program
 {
-    public static void Main(string[] args)
+    private static readonly List<User> db = new List<User>();
+    public static async Task Main(string[] args)
     {
+        Thread thread = new Thread(Greet);
+        thread.Start();
+
+        Console.WriteLine("Main thread is running");
         //Biwise operate on integers bit by bit
         // 5 = 00000000 00000000 00000000 00000101
         //10 = 00000000 00000000 00000000 00001010
@@ -46,11 +49,35 @@ public class Program
         //    Console.WriteLine("No permission to view data");
         //}
 
-        var userResponse = TestService.GetUser("test@email.com");
-        Console.WriteLine(JsonSerializer.Serialize(userResponse));
+        //var userResponse = TestService.GetUserAsync("test@email.com");
+        //Console.WriteLine(JsonSerializer.Serialize(userResponse));
 
-        var tasksResponse = TestService.GetTasksByStatus(ETaskStatus.Completed);
-        Console.WriteLine(JsonSerializer.Serialize(tasksResponse));
+        //var tasksResponse = TestService.GetTasksByStatus(ETaskStatus.Completed);
+        //Console.WriteLine(JsonSerializer.Serialize(tasksResponse));
+
+        LambdaAndAsync.Test();
+
+        var user = await GetUserAsync("user@email.com");
+        var user2 = GetUserAsync("");
+        var userId = user2.Status;
+        // Start downloading 5GB of files
+        // While waiting - do other things
+        // When the download is finshed - continue
+        // async
+    }
+
+    public static async Task<User> GetUserAsync(string email)
+    {
+        Task task1 = Task.Delay(3000);
+        Task task2 = Task.Delay(5000);
+
+        await Task.WhenAll(task1, task2);
+        return new User();
+    }
+
+    public static void Greet()
+    {
+        Console.WriteLine("Hello there!");
     }
 
     static void PrintType<T>() where T : Enum
@@ -107,7 +134,7 @@ public class Program
         }
         //do we have an existing user with this email?
         //if yes, return
-        var existingUser = GetUser(email);
+        var existingUser = GetUserAsync(email);
         if(existingUser != null)
         {
             return false;
@@ -121,11 +148,6 @@ public class Program
     static bool AddUser(string name, string email, string password)
     {
         return true;
-    }
-
-    static string GetUser(string email)
-    {
-        return email;
     }
 
     static bool IsAValidEmail(string email)
