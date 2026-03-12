@@ -9,5 +9,10 @@
         {
             return Width * Height;
         }
+
+        public override void Describe()
+        {
+            Console.WriteLine("This is a rectangle");
+        }
     }
 }

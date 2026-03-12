@@ -1,29 +1,118 @@
-﻿using Conclase9.ClassFeb232026;
+﻿using Conclase9.ClassFeb272027;
+using Conclase9.ClassMarch022026;
+using Conclase9.March112026;
 
 public class Program
 {
-    public static void Main(string[] args)
+    private static readonly List<User> db = new List<User>();
+    public static async Task Main(string[] args)
     {
-        //var wallet = new Checkout(new WalletPayment());
-        //wallet.Process(2500.56M);
+        Thread thread = new Thread(Greet);
+        thread.Start();
 
-        //var cash = new Checkout(new CashPayment());
-        //cash.Process(4300.12M);
+        Console.WriteLine("Main thread is running");
+        //Biwise operate on integers bit by bit
+        // 5 = 00000000 00000000 00000000 00000101
+        //10 = 00000000 00000000 00000000 00001010
+        // & - AND - Both bits must be 1 to get 1
+        // 5 & 10
+        // 5 = 00000000 00000000 00000000 00000101
+        //10 = 00000000 00000000 00000000 00001010
+        //Res= 00000000 00000000 00000000 00000000
+        //var bit5And10 = 5 & 10;
+        //Console.WriteLine(bit5And10);
 
-        //var card = new Checkout(new CardPayment());
-        //card.Process(6804.89M);
+        // 5 | 10
+        // 5 = 00000000 00000000 00000000 00000101
+        //10 = 00000000 00000000 00000000 00001010
+        //Res= 00000000 00000000 00000000 00001111
+        //var bit5Or10 = 5 | 10;
+        //Console.WriteLine(bit5Or10);
 
-        //IPayment cash1 = new CashPayment();
-        //cash1.Pay(123.58M);
+        //var user = new User
+        //{
+        //    Name = "Test",
+        //    Email = "test@email.com",
+        //    Status = AccountStatus.Active
+        //};
 
-        IProjectDatabase database = new InMemoryDB();
+        //AdvancedEnumTest.AssignPermission(user, Permission.Read | Permission.Create | Permission.Update);
+        //if (user.Permission.HasFlag(Permission.Read))
+        //{
+        //    var response = AdvancedEnumTest.DisplayTask();
+        //    Console.WriteLine(response);
+        //    var task = JsonSerializer.Deserialize<UserTask>(response);
+        //    Console.WriteLine($"Title: {task?.Title}\nStatus: {task?.StatusText}");
+        //}
+        //else
+        //{
+        //    Console.WriteLine("No permission to view data");
+        //}
 
+        //var userResponse = TestService.GetUserAsync("test@email.com");
+        //Console.WriteLine(JsonSerializer.Serialize(userResponse));
 
-        database.Add("Record 1");
-        database.Update(1, "Record 2");
-        database.Get(1);
-        database.GetAll();
-        database.Remove(1);
+        //var tasksResponse = TestService.GetTasksByStatus(ETaskStatus.Completed);
+        //Console.WriteLine(JsonSerializer.Serialize(tasksResponse));
+
+        LambdaAndAsync.Test();
+
+        var user = await GetUserAsync("user@email.com");
+        var user2 = GetUserAsync("");
+        var userId = user2.Status;
+        // Start downloading 5GB of files
+        // While waiting - do other things
+        // When the download is finshed - continue
+        // async
+    }
+
+    public static async Task<User> GetUserAsync(string email)
+    {
+        Task task1 = Task.Delay(3000);
+        Task task2 = Task.Delay(5000);
+
+        await Task.WhenAll(task1, task2);
+        return new User();
+    }
+
+    public static void Greet()
+    {
+        Console.WriteLine("Hello there!");
+    }
+
+    static void PrintType<T>() where T : Enum
+    {
+        Console.WriteLine(typeof(T));
+    }
+
+    static void Print(TrafficLight light)
+    {
+        switch (light)
+        {
+            case TrafficLight.Red:
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Stop!!!");
+                break;
+            case TrafficLight.Yellow:
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Slow Down");
+                break;
+            case TrafficLight.Green:
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Go!!!");
+                break;
+        }
+    }
+
+    static TrafficLight Next(TrafficLight light)
+    {
+        switch (light)
+        {
+            case TrafficLight.Red: return TrafficLight.Green;
+            case TrafficLight.Green: return TrafficLight.Yellow;
+            case TrafficLight.Yellow: return TrafficLight.Red;
+            default: return TrafficLight.Red;
+        }
     }
 
     public static bool Register(string name, string email, string password)
@@ -45,7 +134,7 @@ public class Program
         }
         //do we have an existing user with this email?
         //if yes, return
-        var existingUser = GetUser(email);
+        var existingUser = GetUserAsync(email);
         if(existingUser != null)
         {
             return false;
@@ -59,11 +148,6 @@ public class Program
     static bool AddUser(string name, string email, string password)
     {
         return true;
-    }
-
-    static string GetUser(string email)
-    {
-        return email;
     }
 
     static bool IsAValidEmail(string email)
